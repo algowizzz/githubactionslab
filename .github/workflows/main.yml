@@ -1,0 +1,63 @@
+name: simple CI
+
+on: push
+
+jobs:
+  lint:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkoutcode
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+            node-version: 22
+            cache: "npm"
+
+      - name: print lint
+        run: echo "lint start"
+      - name: run lint check
+        run: npm run lint
+      - name: run lint check
+        run: echo "lint end"
+
+
+  test:
+    runs-on: ubuntu-20.04
+    needs: lint
+    steps:
+      - name: Checkoutcode
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+            node-version: 22
+            cache: "npm"
+
+      - name: print test
+        run: echo "test start"
+      - name: run test check
+        run: npm run test
+      - name: run test check
+        run: echo "test end"
+
+
+
+  build:
+    runs-on: ubuntu-20.04
+    needs: [lint,test]
+    steps:
+      - name: Checkoutcode
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+            node-version: 22
+            cache: "npm"
+
+      - name: print build
+        run: echo "build start"
+      - name: run build check
+        run: npm run build
+      - name: run build check
+        run: echo "build end"
